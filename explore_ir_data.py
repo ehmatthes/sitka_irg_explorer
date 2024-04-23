@@ -78,3 +78,28 @@ st.write(f"Unassociated notifications: {stats["unassociated_notifications"]}")
 st.write(f"Notification times:")
 for slide_event, notification_time in stats["notification_times"].items():
     st.write(f"{slide_event.name}: {notification_time} minutes")
+
+st.write("---")
+
+st.write(len(reading_sets))
+
+event_reading_set = None
+for reading_set in reading_sets:
+    ts_first = reading_set[0].dt_reading
+    ts_last = reading_set[-1].dt_reading
+    if ts_first.date() <= event_date <= ts_last.date():
+        event_reading_set = reading_set
+        break
+
+st.write(event_reading_set)
+
+# import pdb
+# breakpoint()
+
+
+# critical_points = a_utils.get_critical_points(reading_set)
+# ph.plot_data_static(
+#     reading_set,
+#     known_slides=known_slides,
+#     critical_points=critical_points,
+#     root_output_directory=root_output_directory)
