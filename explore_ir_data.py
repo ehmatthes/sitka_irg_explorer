@@ -7,6 +7,9 @@ import datetime
 import streamlit as st
 import pandas as pd
 
+from slide_event import SlideEvent
+import utils
+
 
 path = Path(__file__).parent / "data" / "irva_akdt_022016-033124_arch_format.txt"
 df = pd.read_csv(
@@ -58,3 +61,7 @@ critical_rate = st.slider(
     )
 
 st.write("---")
+
+# Get known slides.
+slides_file = 'resources/known_slides.json'
+known_slides = SlideEvent.load_slides(slides_file)
