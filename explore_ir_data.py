@@ -1,7 +1,7 @@
 """Explore data from the Indian River (Ḵaasda Héen) stream gage in Sitka."""
 
 from pathlib import Path
-import pdb
+import ipdb
 import datetime
 
 import streamlit as st
@@ -33,4 +33,11 @@ while slider_date <= last_date:
     slider_date += datetime.timedelta(days=7)
 
 
-breakpoint()
+# breakpoint()
+
+start_date = st.slider(
+    label="Start date",
+    min_value=datetime.date(first_date.year, first_date.month, first_date.day),
+    max_value=datetime.date(last_date.year, last_date.month, last_date.day)
+    # step=datetime.timedelta(days=7),
+    )
