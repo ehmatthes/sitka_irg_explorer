@@ -33,7 +33,7 @@ last_date = df.ts_reading.iloc[-1]
 st.write("### Event date:")
 
 event_dates = [
-    datetime.date(2016, 9, 15),
+    datetime.date(2016, 9, 17),
     datetime.date(2017, 9, 3),
     datetime.date(2019, 9, 19),
     datetime.date(2020, 11, 1),
