@@ -2,6 +2,7 @@
 
 from pathlib import Path
 import pdb
+import datetime
 
 import streamlit as st
 import pandas as pd
@@ -22,5 +23,14 @@ df = pd.read_csv(
 
 first_date = df.ts_reading[0]
 last_date = df.ts_reading.iloc[-1]
+
+# Let user choose start and end date for analysis.
+# Resolution = 7 days.
+slider_date = first_date
+slider_dates = []
+while slider_date <= last_date:
+    slider_dates.append(slider_date)
+    slider_date += datetime.timedelta(days=7)
+
 
 breakpoint()
