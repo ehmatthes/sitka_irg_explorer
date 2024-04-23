@@ -592,7 +592,7 @@ def plot_data_static(readings, critical_points=[], known_slides=[],
     # Save to file.
     if not filename:
         filename = f"plots/ir_plot_{readings[-1].dt_reading.__str__()[:10]}.png"
-    plt.savefig(filename)
+    plt.savefig(filename, bbox_inches="tight")
 
     print(f"  saved: {filename}")
 

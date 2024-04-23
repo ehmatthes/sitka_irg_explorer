@@ -13,6 +13,7 @@ import utils.analysis_utils as a_utils
 from utils.stats import get_blank_stats
 from utils import explore_utils
 
+# Read data.
 path = Path(__file__).parent / "data" / "irva_akdt_022016-033124_arch_format.txt"
 df = pd.read_csv(
     path,
@@ -26,11 +27,12 @@ df = pd.read_csv(
 # Set time zone correctly.
 df['ts_reading'] = df['ts_reading'].dt.tz_localize("America/Anchorage", ambiguous="NaT")
 
+# Get date range for inputs.
 first_date = df.ts_reading[0]
 last_date = df.ts_reading.iloc[-1]
 
 # Let user choose which event to focus on.
-st.write("### Event date:")
+st.sidebar.write("### Event date:")
 
 event_dates = [
     datetime.date(2016, 9, 17),
@@ -39,14 +41,16 @@ event_dates = [
     datetime.date(2020, 11, 1),
 ]
 
-event_date = st.radio(
+event_date = st.sidebar.radio(
     label="Event date",
     options=event_dates,
     )
 
-st.write("### Critical factors:")
+st.sidebar.write("---")
 
-critical_rise = st.slider(
+st.sidebar.write("### Critical factors:")
+
+critical_rise = st.sidebar.slider(
     label="Critical rise (ft)",
     min_value=2.0,
     max_value=3.0,
@@ -54,7 +58,7 @@ critical_rise = st.slider(
     step=0.1,
     )
 
-critical_rate = st.slider(
+critical_rate = st.sidebar.slider(
     label="Critical rate (ft/hr)",
     min_value=0.25,
     max_value=1.0,
@@ -62,7 +66,7 @@ critical_rate = st.slider(
     step=0.05,
     )
 
-st.write("---")
+st.sidebar.write("---")
 
 # Get known slides.
 slides_file = 'resources/known_slides.json'
