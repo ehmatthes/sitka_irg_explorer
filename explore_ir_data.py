@@ -71,3 +71,10 @@ known_slides = SlideEvent.load_slides(slides_file)
 
 readings = explore_utils.get_readings_from_df(df)
 reading_sets = a_utils.get_reading_sets(readings, known_slides, stats, critical_rise, critical_rate)
+
+st.write(f"Notifications: {stats["notifications_issued"]}")
+st.write(f"Associated notifications: {stats["associated_notifications"]}")
+st.write(f"Unassociated notifications: {stats["unassociated_notifications"]}")
+st.write(f"Notification times:")
+for slide_event, notification_time in stats["notification_times"].items():
+    st.write(f"{slide_event.name}: {notification_time} minutes")

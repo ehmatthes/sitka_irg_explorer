@@ -15,8 +15,6 @@ def get_readings_from_df(df):
     timestamps_utc = df["ts_reading"].dt.tz_convert("UTC")
     assert len(heights) == len(timestamps_utc)
 
-    st.write(timestamps[0], timestamps_utc[0])
-
     readings = [
         ir_reading.IRReading(ts, height)
         for ts, height
