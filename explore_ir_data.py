@@ -24,60 +24,37 @@ df['ts_reading'] = df['ts_reading'].dt.tz_localize("America/Anchorage", ambiguou
 first_date = df.ts_reading[0]
 last_date = df.ts_reading.iloc[-1]
 
-# Let user choose start and end date for analysis.
-# Resolution = 7 days.
-min_value=datetime.date(first_date.year, first_date.month, first_date.day)
-max_value=datetime.date(last_date.year, last_date.month, last_date.day)
-value=datetime.date(2019, 8, 1)
-step=datetime.timedelta(days=7)
+# Let user choose which event to focus on.
+st.write("### Event date:")
 
-start_date = st.slider(
-    label="Start date",
-    value=datetime.date(2019, 8, 1),
-    min_value=min_value,
-    max_value=max_value,
-    step=step,
+event_dates = [
+    datetime.date(2016, 9, 15),
+    datetime.date(2017, 9, 3),
+    datetime.date(2019, 9, 19),
+    datetime.date(2020, 11, 1),
+]
+
+event_date = st.radio(
+    label="Event date",
+    options=event_dates,
     )
-
-end_date = st.slider(
-    label="End date",
-    value=datetime.date(2019, 8, 31),
-    min_value=min_value,
-    max_value=max_value,
-    step=step,
-    )
-
-if start_date > end_date:
-    st.error("End date must be later than start date.")
-    st.stop()
-
-st.write("---")
-
-start_year = st.slider(
-        label="Start year",
-        value=2019,
-        min_value=first_date.year,
-        max_value=last_date.year,
-        step=1,
-    )
-start_month = st.slider(
-        label="Start month",
-        value=8,
-        min_value=1,
-        max_value=12,
-        step=1,
-    )
-start_day = st.slider(
-    label="Start day",
-    value=1,
-    min_value=1,
-    max_value=31,
-    step=1,
-    )
-start_date_2 = datetime.date(year=start_year, month=start_month, day=start_day)
-
-if start_date_2 < datetime.date(first_date.year, first_date.month, first_date.day):
-    start_date_2 = first_date
-st.write(start_date_2)
 
 st.write("### Critical factors:")
+
+critical_rise = st.slider(
+    label="Critical rise (ft)",
+    min_value=2.0,
+    max_value=3.0,
+    value=2.5,
+    step=0.1,
+    )
+
+critical_rate = st.slider(
+    label="Critical rate (ft/hr)",
+    min_value=0.25,
+    max_value=1.0,
+    value=0.5,
+    step=0.05,
+    )
+
+st.write("---")
