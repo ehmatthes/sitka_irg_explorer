@@ -8,7 +8,10 @@ import streamlit as st
 import pandas as pd
 
 from slide_event import SlideEvent
-import utils
+import plot_heights as ph
+import utils.analysis_utils as a_utils
+from utils.stats import stats
+from utils import explore_utils
 
 
 path = Path(__file__).parent / "data" / "irva_akdt_022016-033124_arch_format.txt"
@@ -65,3 +68,6 @@ st.write("---")
 # Get known slides.
 slides_file = 'resources/known_slides.json'
 known_slides = SlideEvent.load_slides(slides_file)
+
+readings = explore_utils.get_readings_from_df(df)
+# reading_sets = a_utils.get_reading_sets(df, known_slides, stats, critical_rise, critical_rate)
