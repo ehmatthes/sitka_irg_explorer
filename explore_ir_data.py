@@ -91,10 +91,11 @@ for reading_set in reading_sets:
 
 # Plot selected event.
 if event_reading_set:
+    critical_points = a_utils.get_critical_points(event_reading_set, critical_rise, critical_rate)
     path_plot = ph.plot_data_static(
         event_reading_set,
         known_slides=known_slides,
-        critical_points=[],
+        critical_points=critical_points,
         root_output_directory="plots/",
         )
 
