@@ -52,3 +52,32 @@ if start_date > end_date:
     st.stop()
 
 st.write("---")
+
+start_year = st.slider(
+        label="Start year",
+        value=2019,
+        min_value=first_date.year,
+        max_value=last_date.year,
+        step=1,
+    )
+start_month = st.slider(
+        label="Start month",
+        value=8,
+        min_value=1,
+        max_value=12,
+        step=1,
+    )
+start_day = st.slider(
+    label="Start day",
+    value=1,
+    min_value=1,
+    max_value=31,
+    step=1,
+    )
+start_date_2 = datetime.date(year=start_year, month=start_month, day=start_day)
+
+if start_date_2 < datetime.date(first_date.year, first_date.month, first_date.day):
+    start_date_2 = first_date
+st.write(start_date_2)
+
+st.write("### Critical factors:")
