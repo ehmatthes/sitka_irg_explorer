@@ -81,8 +81,6 @@ for slide_event, notification_time in stats["notification_times"].items():
 
 st.write("---")
 
-st.write(len(reading_sets))
-
 event_reading_set = None
 for reading_set in reading_sets:
     ts_first = reading_set[0].dt_reading
@@ -91,15 +89,21 @@ for reading_set in reading_sets:
         event_reading_set = reading_set
         break
 
-st.write(event_reading_set)
+# Plot selected event.
+if event_reading_set:
+    path_plot = ph.plot_data_static(
+        event_reading_set,
+        known_slides=known_slides,
+        critical_points=[],
+        root_output_directory="plots/",
+        )
 
-# import pdb
-# breakpoint()
+    st.image(path_plot)
+else:
+    st.write("No relevant plot.")
 
 
-# critical_points = a_utils.get_critical_points(reading_set)
-# ph.plot_data_static(
-#     reading_set,
-#     known_slides=known_slides,
-#     critical_points=critical_points,
-#     root_output_directory=root_output_directory)
+# tss = [r.dt_reading for r in event_reading_set]
+# st.write(tss)
+
+

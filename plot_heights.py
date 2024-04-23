@@ -591,13 +591,15 @@ def plot_data_static(readings, critical_points=[], known_slides=[],
 
     # Save to file.
     if not filename:
-        filename = f"{root_output_directory}current_ir_plots/ir_plot_{readings[-1].dt_reading.__str__()[:10]}.png"
+        filename = f"plots/ir_plot_{readings[-1].dt_reading.__str__()[:10]}.png"
     plt.savefig(filename)
 
     print(f"  saved: {filename}")
 
     # Close figure, especially helpful when rendering many frames for animation.
     plt.close('all')
+
+    return filename
 
 
 if __name__ == '__main__':
