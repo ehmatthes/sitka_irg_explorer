@@ -46,7 +46,7 @@ def get_reading_sets(readings, known_slides, stats, rise_critical, m_critical):
             known_slides, readings)
 
     # Find the start of all critical periods in this data file.
-    first_critical_points = get_first_critical_points(readings)
+    first_critical_points = get_first_critical_points(readings, rise_critical, m_critical)
     for reading in first_critical_points:
         print(ir_reading.get_formatted_reading(reading))
     stats['notifications_issued'] += len(first_critical_points)
@@ -60,7 +60,7 @@ def get_reading_sets(readings, known_slides, stats, rise_critical, m_critical):
     #   process readings for unassociated slides and build
     #   slide_reading_sets.
     for reading_set in critical_reading_sets:
-        critical_points = get_critical_points(reading_set)
+        critical_points = get_critical_points(reading_set, rise_critical, m_critical)
         relevant_slide = ph.get_relevant_slide(reading_set, known_slides)
         if relevant_slide:
             stats['relevant_slides'].append(relevant_slide)
@@ -94,7 +94,7 @@ def get_reading_sets(readings, known_slides, stats, rise_critical, m_critical):
     return critical_reading_sets + slide_reading_sets
 
 
-def get_critical_points(readings):
+def get_critical_points(readings, rise_critical, m_critical):
     """Return critical points.
     A critical point is the first point where the slope has been critical
     over a minimum rise. Once a point is considered critical, there are no
@@ -162,7 +162,7 @@ def get_recent_readings(readings, hours_lookback):
     return recent_readings
 
 
-def get_first_critical_points(readings):
+def get_first_critical_points(readings, rise_critical, m_critical):
     """From a long set of data, find the first critical reading in
     each potentially critical event.
     Return this set of readings.

@@ -70,4 +70,4 @@ slides_file = 'resources/known_slides.json'
 known_slides = SlideEvent.load_slides(slides_file)
 
 readings = explore_utils.get_readings_from_df(df)
-# reading_sets = a_utils.get_reading_sets(df, known_slides, stats, critical_rise, critical_rate)
+reading_sets = a_utils.get_reading_sets(readings, known_slides, stats, critical_rise, critical_rate)
