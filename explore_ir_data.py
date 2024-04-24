@@ -73,19 +73,8 @@ critical_rate = st.sidebar.slider(
 
 st.sidebar.write("---")
 
-# Checkbox for larger plot image.
-large_image = st.sidebar.checkbox(
-    label="Show large plot image",
-    value=False,
-    )
-
-# "Never" means never fit the plot image to the column.
-if large_image:
-    image_width="never"
-else:
-    image_width="auto"
-
 # --- End sidebar ---
+
 
 # Get known slides.
 slides_file = 'resources/known_slides.json'
@@ -122,7 +111,7 @@ if event_reading_set:
         root_output_directory="plots/",
         )
 
-    st.image(path_plot, use_column_width=image_width)
+    st.image(path_plot)
 else:
     st.write("No relevant plot.")
 
