@@ -36,8 +36,12 @@ last_date = df.ts_reading.iloc[-1]
 
 # --- Sidebar ---
 
+
 # Let user choose which event to focus on.
 st.sidebar.header("Event date")
+
+msg = "Which event would you like to focus on?"
+st.sidebar.info(msg)
 
 event_dates = [
     datetime.date(2016, 9, 17),
@@ -56,6 +60,9 @@ event_date = st.sidebar.radio(
 st.sidebar.write("---")
 
 st.sidebar.header("Critical factors")
+
+msg = "What combination of total rise, and average rate of rise, will be used to identify critical points?"
+st.sidebar.info(msg)
 
 critical_rise = st.sidebar.slider(
     label="Critical rise (ft)",
