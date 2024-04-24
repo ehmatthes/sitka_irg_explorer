@@ -49,6 +49,7 @@ event_dates = [
 event_date = st.sidebar.radio(
     label="Event date",
     options=event_dates,
+    index=2
     )
 
 st.sidebar.write("---")
