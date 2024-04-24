@@ -103,7 +103,7 @@ if event_reading_set:
         root_output_directory="plots/",
         )
 
-    st.image(path_plot)
+    st.image(path_plot, use_column_width="auto")
 else:
     st.write("No relevant plot.")
 
