@@ -13,6 +13,9 @@ import utils.analysis_utils as a_utils
 from utils.stats import get_blank_stats
 from utils import explore_utils
 
+# Streamlit config
+st.set_page_config(layout="wide")
+
 # Read data.
 path = Path(__file__).parent / "data" / "irva_akdt_022016-033124_arch_format.txt"
 df = pd.read_csv(
@@ -30,6 +33,8 @@ df['ts_reading'] = df['ts_reading'].dt.tz_localize("America/Anchorage", ambiguou
 # Get date range for inputs.
 first_date = df.ts_reading[0]
 last_date = df.ts_reading.iloc[-1]
+
+# --- Sidebar ---
 
 # Let user choose which event to focus on.
 st.sidebar.write("### Event date:")
@@ -68,6 +73,20 @@ critical_rate = st.sidebar.slider(
 
 st.sidebar.write("---")
 
+# Checkbox for larger plot image.
+large_image = st.sidebar.checkbox(
+    label="Show large plot image",
+    value=False,
+    )
+
+# "Never" means never fit the plot image to the column.
+if large_image:
+    image_width="never"
+else:
+    image_width="auto"
+
+# --- End sidebar ---
+
 # Get known slides.
 slides_file = 'resources/known_slides.json'
 known_slides = SlideEvent.load_slides(slides_file)
@@ -103,7 +122,7 @@ if event_reading_set:
         root_output_directory="plots/",
         )
 
-    st.image(path_plot, use_column_width="auto")
+    st.image(path_plot, use_column_width=image_width)
 else:
     st.write("No relevant plot.")
 
