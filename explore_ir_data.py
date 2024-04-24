@@ -37,7 +37,7 @@ last_date = df.ts_reading.iloc[-1]
 # --- Sidebar ---
 
 # Let user choose which event to focus on.
-st.sidebar.write("### Event date:")
+st.sidebar.header("Event date")
 
 event_dates = [
     datetime.date(2016, 9, 17),
@@ -49,12 +49,13 @@ event_dates = [
 event_date = st.sidebar.radio(
     label="Event date",
     options=event_dates,
-    index=2
+    index=2,
+    label_visibility="hidden",
     )
 
 st.sidebar.write("---")
 
-st.sidebar.write("### Critical factors:")
+st.sidebar.header("Critical factors")
 
 critical_rise = st.sidebar.slider(
     label="Critical rise (ft)",
@@ -85,6 +86,38 @@ readings = explore_utils.get_readings_from_df(df)
 stats = get_blank_stats()
 reading_sets = a_utils.get_reading_sets(readings, known_slides, stats, critical_rise, critical_rate)
 
+
+# --- Show plot for selected event ---
+
+# Find the reading_set associated with the selected date.
+event_reading_set = None
+for reading_set in reading_sets:
+    ts_first = reading_set[0].dt_reading
+    ts_last = reading_set[-1].dt_reading
+    if ts_first.date() <= event_date <= ts_last.date():
+        event_reading_set = reading_set
+        break
+
+if event_reading_set:
+    st.header("Plot for selected date")
+    critical_points = a_utils.get_critical_points(event_reading_set, critical_rise, critical_rate)
+    path_plot = ph.plot_data_static(
+        event_reading_set,
+        known_slides=known_slides,
+        critical_points=critical_points,
+        root_output_directory="plots/",
+        )
+    st.image(path_plot)
+else:
+    st.write("No relevant plot.")
+
+st.write("---")
+
+
+# --- Show summary of critical events ---
+
+st.header("Summary of critical events")
+
 st.write(f"Notifications: {stats["notifications_issued"]}")
 st.write(f"Associated notifications: {stats["associated_notifications"]}")
 st.write(f"Unassociated notifications: {stats["unassociated_notifications"]}")
@@ -94,27 +127,9 @@ for slide_event, notification_time in stats["notification_times"].items():
 
 st.write("---")
 
-event_reading_set = None
-for reading_set in reading_sets:
-    ts_first = reading_set[0].dt_reading
-    ts_last = reading_set[-1].dt_reading
-    if ts_first.date() <= event_date <= ts_last.date():
-        event_reading_set = reading_set
-        break
 
-# Plot selected event.
-if event_reading_set:
-    critical_points = a_utils.get_critical_points(event_reading_set, critical_rise, critical_rate)
-    path_plot = ph.plot_data_static(
-        event_reading_set,
-        known_slides=known_slides,
-        critical_points=critical_points,
-        root_output_directory="plots/",
-        )
 
-    st.image(path_plot)
-else:
-    st.write("No relevant plot.")
+
 
 
 # tss = [r.dt_reading for r in event_reading_set]
